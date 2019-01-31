@@ -1,0 +1,12 @@
+{
+    "name": "Saikoro Dice App",
+    "short_name": "Saikoro",
+    "background_color": "#000",
+    "theme_color": "#000",
+    "icons": [{
+        "src": "./info/icon192.png",
+        "sizes": "192x192"
+    }],
+    "start_url": "./app.html",
+    "display": "standalone"
+}

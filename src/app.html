@@ -1,0 +1,55 @@
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Production - NOBUILD --><style>/*<!-- /NOBUILD -->
+    <title>Saikoro</title>
+    <link rel="icon" type="image/png" href="info/icon256a.png">
+    <link rel="manifest" href="manifest.json">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="apple-touch-icon" href="info/icon192.png" sizes="192x192">
+    <link rel="apple-touch-startup-image" href="info/startup.png">
+    <!-- NOBUILD -->*/</style><!-- /NOBUILD - /Production -->
+
+    <link rel="stylesheet" href="style.css">
+
+</head>
+<body>
+
+    <pre class="log_screen"></pre>
+    <div id="container">
+        <div class="main_screen"></div>
+        <!-- Development - NOBUILD -->
+            <style>.main_screen { opacity:0.1; }</style>
+        <!-- /NOBUILD - /Development -->
+    </div>
+    <div id="footer" class="info_screen"></div>
+    <div class="touch_screen"></div>
+
+    <link rel="stylesheet" href="app.css">
+    <!-- Development - NOBUILD -->
+        <link rel="stylesheet" href="app/user.css">
+        <link rel="stylesheet" href="app/dice.css">
+    <!-- /NOBUILD - /Development -->
+
+    <script type="text/javascript" src="engine.js"></script>
+    <!-- Development - NOBUILD -->
+        <script type="text/javascript" src="engine/basics.js"></script>
+        <script type="text/javascript" src="engine/count.js"></script>
+        <script type="text/javascript" src="engine/params.js"></script>
+        <script type="text/javascript" src="engine/screen.js"></script>
+        <script type="text/javascript" src="engine/input.js"></script>
+    <!-- /NOBUILD - /Development -->
+
+    <script type="text/javascript" src="app.js"></script>
+    <!-- Development - NOBUILD -->
+        <script type="text/javascript" src="app/user.js"></script>
+        <script type="text/javascript" src="app/dice.js"></script>
+    <!-- /NOBUILD - /Development -->
+
+    <script>navigator.serviceWorker.register("worker.js");</script>
+
+</body>
+</html>

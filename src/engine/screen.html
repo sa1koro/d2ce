@@ -1,0 +1,36 @@
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+.cube {
+    background-image: url("data:image/svg+xml;charset=utf8,<svg viewBox='0 0 20 20' width='100' xmlns='http://www.w3.org/2000/svg'><path d='M2.5,2.5h15v15h-15Z' stroke='gray' fill='gray'/></svg>");
+    width: 100; height: 100;
+}
+.cube.wireframe {
+    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%2020%2020'%3E%3Cpath%20d%3D'M2.5%2C2.5h15v15h-15Z'%20stroke%3D'gray'%20fill%3D'none'%2F%3E%3C%2Fsvg%3E");
+    width: 100; height: 100;
+}
+@keyframes cube_scaling {
+    0% { transform: scale(0.5); }
+    100% { transform: scale(1.0); }
+}
+.cube.scaling {
+    transform-origin: 50% 50%;
+    animation: cube_scaling 1s forwards;
+}
+.screen {
+    position: absolute;
+    left: 0; top: 0; margin: 20;
+    width: 200; height: 200;
+    background-color: silver;
+    opacity: 0.5;
+}
+</style>
+</head>
+<body>
+<pre class="screen"></pre>
+<pre class="screen"></pre>
+<script type="text/javascript" src="basics.js"></script>
+<script type="text/javascript" src="screen.js"></script>
+</body>
+</html>

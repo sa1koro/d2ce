@@ -1,0 +1,88 @@
+{
+	"0": "Update timestamp.",
+ 	"0": {"srcfiles": ["src/timestamp.txt"],
+	      "target": "src/timestamp.txt",
+ 	      "update_timestamp": true},
+
+	"1": "Update version for package json file.",
+   	"1": {"srcfiles": ["package.json"],
+  	      "target": "package.json",
+   	      "update_version": true},
+
+    "2": "Update version for engine js file.",
+  	"2": {"srcfiles": ["src/engine.js"],
+ 	      "target": "src/engine.js",
+  	      "update_version": true},
+
+    "3": "Update version for service worker js file.",
+  	"3": {"srcfiles": ["src/worker.js"],
+ 	      "target": "src/worker.js",
+  	      "update_version": true},
+
+	"4": "Minify engine js files.",
+ 	"4": {"srcfiles": ["src/engine.js",
+                       "src/engine/basics.js",
+                       "src/engine/count.js",
+                       "src/engine/params.js",
+                       "src/engine/screen.js",
+                       "src/engine/input.js"],
+	      "target": "docs/engine.js",
+          "ignore_nobuild": true,
+	      "minify": true},
+
+    "5": "Minify app js files.",
+  	"5": {"srcfiles": ["src/app.js",
+  	                   "src/app/user.js",
+  	                   "src/app/dice.js"],
+ 	      "target": "docs/app.js",
+          "ignore_nobuild": true,
+ 	      "minify": true},
+
+	"6": "Minify service worker js files.",
+	"6": {"srcfiles": ["src/worker.js"],
+	      "target": "docs/worker.js",
+ 	      "minify": true},
+
+	"7": "Minify app asset files.",
+  	"7": {"srcfiles": ["src/app.css",
+  	                   "src/app/user.css",
+  	                   "src/app/dice.css"],
+  	      "target": "docs/app.css",
+  	      "minify": true},
+
+	"8": "Minify app html file.",
+	"8": {"srcfiles": ["src/app.html"],
+	       "target": "docs/app.html",
+	       "ignore_nobuild": true,
+	       "minify": true},
+
+    "9": "Minify index html file.",
+ 	"9": {"srcfiles": ["src/index.html"],
+ 	      "target": "docs/index.html",
+		  "ignore_nobuild": true,
+  	      "minify": true},
+
+	"10": "Minify index style file.",
+   	"10": {"srcfiles": ["src/style.css"],
+   	      "target": "docs/style.css",
+  		  "minify": true},
+
+	"11": "Copy manifest files.",
+ 	"11": {"srcfiles": ["src/manifest.json"],
+ 	      "target": "docs/manifest.json"},
+
+	"12": "Convert icon file.",
+	"12": {"srcfiles": ["src/info/icon.svg"],
+	       "options": {"width": 192},
+	       "target": "docs/info/icon192.png"},
+
+    "13": "Convert icon file with alpha.",
+	"13": {"srcfiles": ["src/info/icon_a.svg"],
+	       "options": {"width": 256},
+	       "target": "docs/info/icon256a.png"},
+
+	"14": "Convert startup screen file.",
+	"14": {"srcfiles": ["src/info/startup.svg"],
+ 	       "options": {"width": 1080, "height": 1920},
+ 	       "target": "docs/info/startup.png"}
+}

@@ -1,0 +1,22 @@
+{
+  "name": "d1ce",
+  "version": "0.1.190131+0",
+  "description": "",
+  "dependencies": {},
+  "devDependencies": {
+    "html-minifier": "^3.5.21",
+    "http-server": "^0.11.1",
+    "svg2png": "^4.1.1",
+    "uglify-es": "^3.3.9",
+    "uglifycss": "^0.0.29"
+  },
+  "scripts": {
+    "build": "node ./tools/build.js",
+    "deploy": "node ./tools/deploy.js",
+    "serve-src": "http-server ./src",
+    "serve": "http-server ./docs"
+  },
+  "repository": "",
+  "author": "",
+  "license": ""
+}

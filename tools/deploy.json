@@ -1,0 +1,15 @@
+{
+    "srcpath": "docs/",
+    "srcfiles": ["index.html",
+                 "style.css",
+                 "manifest.json",
+                 "app.html",
+                 "app.css",
+                 "engine.js",
+                 "app.js",
+                 "worker.js",
+                 "info/icon192.png",
+                 "info/icon256a.png",
+                 "info/startup.png"],
+    "targetpath": "../../sa1koro.github.io/"
+}
