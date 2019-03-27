@@ -1,22 +1,21 @@
 {
   "name": "d1ce",
-  "version": "0.1.190131+0",
-  "description": "",
-  "dependencies": {},
+  "version": "0.2.190327+16",
+  "description": "Draw 1 Cube Engine for Saikoro.org",
   "devDependencies": {
-    "html-minifier": "^3.5.21",
-    "http-server": "^0.11.1",
     "svg2png": "^4.1.1",
     "uglify-es": "^3.3.9",
-    "uglifycss": "^0.0.29"
+    "uglifycss": "^0.0.29",
+    "html-minifier": "^3.5.21",
+    "http-server": "^0.11.1",
+    "ngrok": "^3.1.1"
   },
   "scripts": {
     "build": "node ./tools/build.js",
-    "deploy": "node ./tools/deploy.js",
-    "serve-src": "http-server ./src",
-    "serve": "http-server ./docs"
+    "serve": "npx http-server . -p 8080 & npx ngrok http 8080",
+    "deploy": "node ./tools/deploy.js"
   },
-  "repository": "",
-  "author": "",
-  "license": ""
+  "homepage": "https://saikoro.org/",
+  "license": "unlicensed",
+  "private": true
 }

@@ -4,7 +4,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- Production - NOBUILD --><style>/*<!-- /NOBUILD -->
-    <title>Saikoro</title>
+    <title>Saikoro.org</title>
     <link rel="icon" type="image/png" href="info/icon256a.png">
     <link rel="manifest" href="manifest.json">
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -13,25 +13,28 @@
     <link rel="apple-touch-startup-image" href="info/startup.png">
     <!-- NOBUILD -->*/</style><!-- /NOBUILD - /Production -->
 
-    <link rel="stylesheet" href="style.css">
-
 </head>
 <body>
 
     <pre class="log_screen"></pre>
+    <div id="header">
+        Saikoro.org
+    </div>
     <div id="container">
         <div class="main_screen"></div>
         <!-- Development - NOBUILD -->
             <style>.main_screen { opacity:0.1; }</style>
         <!-- /NOBUILD - /Development -->
     </div>
-    <div id="footer" class="info_screen"></div>
+    <div id="footer" class="info_screen">
+        Dice web app powered by <a href="https://twitter.com/sa1koro/" target="_blank">@sa1koro</a>
+    </div>
     <div class="touch_screen"></div>
 
     <link rel="stylesheet" href="app.css">
     <!-- Development - NOBUILD -->
-        <link rel="stylesheet" href="app/user.css">
-        <link rel="stylesheet" href="app/dice.css">
+        <link rel="stylesheet" href="app/hand.css">
+        <link rel="stylesheet" href="app/cubes.css">
     <!-- /NOBUILD - /Development -->
 
     <script type="text/javascript" src="engine.js"></script>
@@ -45,8 +48,8 @@
 
     <script type="text/javascript" src="app.js"></script>
     <!-- Development - NOBUILD -->
-        <script type="text/javascript" src="app/user.js"></script>
-        <script type="text/javascript" src="app/dice.js"></script>
+        <script type="text/javascript" src="app/hand.js"></script>
+        <script type="text/javascript" src="app/cubes.js"></script>
     <!-- /NOBUILD - /Development -->
 
     <script>navigator.serviceWorker.register("worker.js");</script>
