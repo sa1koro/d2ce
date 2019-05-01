@@ -4,9 +4,9 @@
     "background_color": "#888",
     "theme_color": "#888",
     "icons": [{
-        "src": "./info/icon192.png",
+        "src": "./d1ce/info/icon192.png",
         "sizes": "192x192"
     }],
-    "start_url": "./app.html",
+    "start_url": "./?app=d1ce",
     "display": "standalone"
 }

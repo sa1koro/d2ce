@@ -120,7 +120,8 @@ d1ce.Input = class {
                 this.tap_time = time - timeout;
 
                 // Timeout or Far depth check.
-                if (this.flick_time <= time - timeout || this.points[1].z >= depth) {
+                if (this.flick_time <= time - timeout
+                 || this.points[1].z - this.points[0].z >= depth) {
                     this.dirs[0].Add(d1ce.Dirs.far);
 
                     // Ignore flick after point reach to far depth.
@@ -132,7 +133,8 @@ d1ce.Input = class {
                 this.dirs[0] = new d1ce.Dirs();
 
                 // Timeout or Far depth check.
-                if (this.tap_time <= time - timeout || this.points[1].z >= depth) {
+                if (this.tap_time <= time - timeout
+                 || this.points[1].z - this.points[0].z >= depth) {
                     this.dirs[0].Add(d1ce.Dirs.far);
 
                     // Ignore tap/flick after point reach to far depth.

@@ -4,33 +4,31 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <title>Saikoro.org</title>
-    <link rel="icon" type="image/png" href="docs/info/icon256a.png">
-    <link rel="manifest" href="docs/manifest.json">
+    <link rel="icon" type="image/png" href="d1ce/info/icon256a.png">
+    <link rel="manifest" href="manifest.json">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <link rel="apple-touch-icon" href="docs/info/icon192.png" sizes="192x192">
-    <link rel="apple-touch-startup-image" href="docs/info/startup.png">
+    <link rel="apple-touch-icon" href="d1ce/info/icon192.png" sizes="192x192">
+    <link rel="apple-touch-startup-image" href="d1ce/info/startup.png">
+
+    <link rel="stylesheet" href="style.css">
 
 </head>
 <body>
 
-    <pre class="log_screen"></pre>
-    <div id="header">
-        Saikoro.org
-    </div>
     <div id="container">
-        <div class="main_screen"></div>
+        <div id="header"></div>
+        <iframe class="main_screen" src="d1ce/app.html"></iframe>
+        <div id="footer">
+            <a href="https://twitter.com/sa1koro/" target="_blank"><img src="https://abs.twimg.com/favicons/favicon.ico" style="width:16px;margin-right:-2px">@sa1koro</a>
+            &nbsp;
+            <!-- <a href="https://instagram.com/sa1koro/" target="_blank"><img src="https://www.instagram.com/favicon.ico" style="width:16px;margin-right:1px">@sa1koro</a>
+            &nbsp; -->
+            <a href="https://github.com/sa1koro/d1ce" target="_blank"><img src="https://github.githubassets.com/favicon.ico"style="width:16px;margin-right:1px">@sa1koro/d1ce</a>
+        </div>
     </div>
-    <div id="footer" class="info_screen">
-        Dice on the web powered by <a href="https://twitter.com/sa1koro/">@sa1koro</a>
-    </div>
-    <div class="touch_screen"></div>
 
-    <link rel="stylesheet" href="docs/app.css">
-
-    <script type="text/javascript" src="docs/engine.js"></script>
-
-    <script type="text/javascript" src="docs/app.js"></script>
+    <script>navigator.serviceWorker.register("worker.js");</script>
 
 </body>
 </html>

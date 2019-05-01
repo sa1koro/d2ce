@@ -25,19 +25,26 @@ class Cubes {
             this.faces[i] = new d1ce.Sprite("cubes");
         }
 
+        // Set default option.
         // Overwrite by boot parameters.
         if (d1ce.Engine.Value("type")) {
-            this.option.UpdateValue("type", d1ce.Engine.Value("type"));
-            d1ce.Engine.UpdateValue("type", null);
+            this.option.UpdateValue("type", Number(d1ce.Engine.Value("type")));
+        }
+        if (!isFinite(this.option.Value("type")) || this.option.Value("type") < 1) {
+            this.option.UpdateValue("type", 1);
+            d1ce.Engine.UpdateValue("type", this.option.Value("type"));
+        } else if (this.option.Value("type") > Cubes.count_max) {
+            this.option.UpdateValue("type", Cubes.count_max);
+            d1ce.Engine.UpdateValue("type", this.option.Value("type"));
         }
         if (d1ce.Engine.Value("seed")) {
             this.option.UpdateValue("seed", d1ce.Engine.Value("seed"));
-            d1ce.Engine.UpdateValue("seed", null);
+            // d1ce.Engine.UpdateValue("seed", null);
         }
-
-        // Set default option.
-        this.option.UpdateValue("type", Number(this.option.Value("type") || 1));
-        this.option.UpdateValue("seed", Number(this.option.Value("seed") || 0));
+        if (!isFinite(this.option.Value("seed"))) {
+            this.option.UpdateValue("seed", 0);
+            d1ce.Engine.UpdateValue("seed", this.option.Value("seed"));
+        }
 
         // Set random seed.
         this.random = new d1ce.Count(this.option.Value("seed"));
@@ -131,12 +138,22 @@ class Cubes {
 
         // Change dice cubes type and save parameters.
         if (change > 0) {
-            this.option.UpdateValue("type",
-                Math.min(this.option.Value("type") + 1, Cubes.count_max));
+            if (!isFinite(this.option.Value("type"))
+              || this.option.Value("type") > Cubes.count_max) {
+                this.option.UpdateValue("type", Cubes.count_max);
+            } else {
+                this.option.UpdateValue("type", this.option.Value("type") + 1);
+            }
+            d1ce.Engine.UpdateValue("type", this.option.Value("type"));
             console.log("type:" + this.option.Value("type"));
         } else if (change < 0) {
-            this.option.UpdateValue("type",
-                Math.max(this.option.Value("type") - 1, 1));
+            if (!isFinite(this.option.Value("type"))
+              || this.option.Value("type") <= 1) {
+                this.option.UpdateValue("type", 1);
+            } else {
+                this.option.UpdateValue("type", this.option.Value("type") - 1);
+            }
+            d1ce.Engine.UpdateValue("type", this.option.Value("type"));
             console.log("type:" + this.option.Value("type"));
         }
 
@@ -191,6 +208,7 @@ class Cubes {
 
             // Save parameters.
             this.option.UpdateValue("seed", this.random.Seed());
+            d1ce.Engine.UpdateValue("seed", this.option.Value("seed"));
             //let time = d1ce.Engine.Time();
             //let result = [time, this.option.Value("type"), this.option.Value("seed")];
             //this.history.UpdateValue(this.history.Keys().length, result);
@@ -237,8 +255,7 @@ class Cubes {
 }
 
 // Dice cubes maximum counts.
-Cubes.count_max = 12;
+Cubes.count_max = 9;
 
 // Dice cubes faces maximum number.
 Cubes.number_max = 6;
-
