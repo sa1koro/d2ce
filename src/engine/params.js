@@ -15,9 +15,10 @@ d1ce.Params = class {
         this.name = name;
         this.keyvalues = {};
 
-        // Load from query string.
         let texts = [];
         if (this.name == null) {
+
+            // Load parameters text from query string.
             let query = window.location.search;
             if (query != null) {
                 console.log("Load query:" + query);
@@ -25,11 +26,20 @@ d1ce.Params = class {
                 texts.push(text);
             }
 
-        // Load from local storage.
         } else {
-            let text = localStorage.getItem(this.name);
+
+            // Load parameters text from message.
+            let text = d1ce.Params.Instance().messages[this.name];
             if (text != null) {
+                console.log("Load message:" + text);
                 texts.push(text);
+
+            // Load parameters text from local storage.
+            } else {
+                let text = localStorage.getItem(this.name);
+                if (text != null) {
+                    texts.push(text);
+                }
             }
         }
 
@@ -64,11 +74,16 @@ d1ce.Params = class {
     }
 
     // Update parameters.
-    UpdateValue(key, value) {
+    UpdateValue(key, value, silent=false) {
         if (value != null) {
             this.keyvalues[key] = value;
         } else {
             delete this.keyvalues[key];
+        }
+
+        // Do not send nor save when silent update.
+        if (silent) {
+            return;
         }
 
         let keyvalues = [];
@@ -79,16 +94,26 @@ d1ce.Params = class {
         }
         let text = keyvalues.join("&");
 
-        // Save to query string.
         if (this.name == null) {
+
+            // Save parameters text to query string.
             let query = "?" + text;
             console.log("Save query:" + query);
             window.history.replaceState(null, "", query);
             // window.location.search = query;
 
-        // Save text to local storage.
         } else {
+
+            // Save parameters text to local storage.
             localStorage.setItem(this.name, text);
+
+            // Post parameters text to parent window.
+            if (window.parent != null) {
+                if (this.name == "*"
+                 || this.name.match(new RegExp("^https?:\/\/"))) {
+                     window.parent.postMessage(text, this.name);
+                }
+            }
         }
     }
 
@@ -96,10 +121,16 @@ d1ce.Params = class {
     static Instance() {
         if (this.instance == null) {
             this.instance = new d1ce.Params();
+            this.instance.messages = [];
         }
         return this.instance;
     }
 }
+
+// Receive parameters envent.
+window.addEventListener("message", (evt) => {
+    d1ce.Params.Instance().messages[evt.origin ? evt.origin : "*"] = evt.data;
+}, false);
 
 
 /* Parameters component test - NOBUILD */
@@ -146,5 +177,5 @@ d1ce.ParamsTest = class {
     }
 }
 
-window.onload = () => d1ce.ParamsTest.Main()
+// window.onload = () => d1ce.ParamsTest.Main()
 /* /NOBUILD - /Test */

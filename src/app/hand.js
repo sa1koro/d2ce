@@ -21,9 +21,13 @@ class Hand {
     }
 
     // Setup screen after load assets.
-    Load() {
+    async Load() {
         this.arrow = new d1ce.Sprite("arrow");
+        this.arrow.LoadImage("data:image/svg+xml;charset=utf8,<svg viewBox='0 0 16 16' width='100' xmlns='http://www.w3.org/2000/svg'><path d='M12,8l-4,-1l0,2Z' stroke='none' fill='silver'/></svg>", 100, 100);
+        this.arrow.SetFrame2(0, 0, 100, 100);
         this.point = new d1ce.Sprite("point");
+        this.point.LoadImage("data:image/svg+xml;charset=utf8,<svg viewBox='0 0 16 16' width='100' xmlns='http://www.w3.org/2000/svg'><circle cx='8' cy='8' r='4' stroke='silver' fill='none'/></svg>", 100, 100);
+        this.point.SetFrame2(0, 0, 100, 100);
     }
 
     // Get touching.

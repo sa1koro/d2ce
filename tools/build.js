@@ -75,11 +75,17 @@ for (var key in tasks) {
     var task = tasks[key];
 	var srcfiles = "";
 	var result = "";
+    var binary = null;
 
 	// Concat all input files to one file.
 	task.srcfiles.forEach((srcfile) => {
-		srcfiles += srcfile + ", ";
-		result += fs.readFileSync(srcfile);
+        if (srcfiles == "") {
+            srcfiles = srcfile;
+        } else {
+            srcfiles += ", " + srcfile;
+        }
+        binary = fs.readFileSync(srcfile);
+        result += binary;
 	});
 
 	// Update timestamp.
@@ -188,27 +194,37 @@ for (var key in tasks) {
 			fs.writeFileSync(task.target, result, "utf8");
 		}
 
-	// Convert svg files to png.
+	// Convert svg files to png or copy png.
 	} else if (task.target.match(".png")) {
 
 		// Ignore multiple svg tags.
 		var result_single = result.replace(/<\/svg\>\s*\<svg[\s\S]*?>/g, "");
 
 		// Convert.
-		var result_convert = svg2png.sync(result_single, task.options);
-		if (result_convert.error) {
-			console.log("" + task.target + " ( " + srcfiles + "): "
-			            + result_convert.error);
-		} else {
-			console.log("" + task.target + " ( " + srcfiles + "): "
-			            + result.length + " bytes -> "
-			            + result_convert.length + " bytes.");
+        if (result_single.match(/svg/)) {
+    		var result_convert = svg2png.sync(result_single, task.options);
+    		if (result_convert.error) {
+    			console.log("" + task.target + " ( " + srcfiles + "): "
+    			            + result_convert.error);
+    		} else {
+    			console.log("" + task.target + " ( " + srcfiles + "): "
+    			            + result.length + " bytes -> "
+    			            + result_convert.length + " bytes.");
+    			var targetpath = task.target.substring(0, task.target.lastIndexOf('/'));
+    			if (targetpath && !fs.existsSync(targetpath)) {
+    				fs.mkdirSync(targetpath);
+    			}
+    			fs.writeFileSync(task.target, result_convert, "utf8");
+    		}
+        } else {
+            console.log("" + task.target + " ( " + srcfiles + "): "
+			            + binary.length + " bytes.");
 			var targetpath = task.target.substring(0, task.target.lastIndexOf('/'));
 			if (targetpath && !fs.existsSync(targetpath)) {
 				fs.mkdirSync(targetpath);
 			}
-			fs.writeFileSync(task.target, result_convert, "utf8");
-		}
+			fs.writeFileSync(task.target, binary);
+        }
 
 	// Minify svg files.
 	} else if (task.target.match(".svg")) {

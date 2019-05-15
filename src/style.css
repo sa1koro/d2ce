@@ -1,3 +1,7 @@
+/* stylesheet
+ * App main data.
+ */
+
 html {
     height: 100%;
     overflow: hidden;
@@ -17,59 +21,47 @@ body {
     overflow: hidden;
 
     font-family: 'Helvetica Neue', 'Arial', sans-serif;
-    background-color: #000;
+    background-color: #fff;
     color: #666;
 }
 
-#logomark {
-    position: absolute;
-    top: 0; left: 0;
-    z-index: 200;
-
-    display: table-cell;
-    text-align: center;
-    vertical-align: middle;
-
-    width: 45px;
-    height: 45px;
-
-    transform: rotate(90deg);
-
-    font-size: 30;
-    background-color: #000;
-    color: #fff;
+a {
+    text-decoration: none;
+    color: #666;
 }
 
 #header, #footer {
     position: absolute;
     top: 0; left: 0; right: 0; bottom: 0;
-    z-index: 180;
+    z-index: 400;
 
     display: table-cell;
     text-align: center;
     vertical-align: middle;
 }
 
+
 #header {
     bottom: auto;
 
     width: 100%;
-    height: 45px;
+    height: 10px;
 
-    font-size: 30;
-    background-color: #000;
-    color: #666;
+    font-size: 10;
 }
 
 #footer {
     top: auto;
 
     width: 100%;
-    height: 15px;
+    height: 10px;
 
     font-size: 10;
-    background-color: #000;
-    color: #666;
+}
+
+@keyframes start {
+    0% { transform: opacity: 0; }
+    100% { transform: opacity: 1; }
 }
 
 #container {
@@ -81,76 +73,31 @@ body {
     justify-content: space-between; -webkit-justify-content: space-between;
     align-items: center; -webkit-align-items: center;
 
-    width: 960px;
-    height: 390px;
-    margin-left: -480px;
-    margin-top: -195px;
+    width: 320px; height: 320px;
+    margin: -160px -160px;
 
     animation: start 0.5s forwards;
 }
 
-/* For mobile screen (ex. mobile portlait mode). */
-@media screen and (max-width: 480px) {
-    #logomark {
-        display: none;
-    }
+.main_screen {
+    z-index: 100;
+
+    display: flex; display: -webkit-flex;
+    flex-wrap: wrap;
+    justify-content: center; -webkit-justify-content: center;
+    align-items: center; -webkit-align-items: center;
+
+    width: 300px; height: 300px; border: none;
+
+    background-color: #fff;
+    color: #666;
 }
 
-/* For mobile wide screen (ex. mobile landscape mode). */
-@media screen and (min-width: 480px) and (max-height: 640px) {
-    #logomark {
-        display: none;
-    }
-    #header {
-        padding-left: 5px;
-        text-align: left;
-    }
-    #footer {
-        text-align: right;
-    }
-    #container {
-        /* flex-direction: row; -webkit-flex-direction: row; */
-
-        width: 360px;
-        margin-left: -180px;
-    }
-    .main_screen {
-        width: 300px;
-    }
+@media screen and (min-width: 480px) and (min-height: 480px) {
+    #container { width: 480px; height: 480px; margin: -240px -240px; }
+    .main_screen { width: 450px; height: 450px; }
 }
-
-/* For large screen (ex. tablet). */
-@media screen and (min-width: 480px) and (min-height: 640px) {
-    #header {
-        padding-left: 50px;
-        text-align: left;
-    }
-    #footer {
-        text-align: right;
-    }
-    #container {
-        width: 510px;
-        margin-left: -255px;
-    }
-    .main_screen {
-        width: 450px;
-    }
-}
-
-/* For extra-large screen (ex. PC). */
-@media screen and (min-width: 800px) and (min-height: 800px) {
-    #header {
-        padding-left: 50px;
-        text-align: left;
-    }
-    #footer {
-        text-align: right;
-    }
-    #container {
-        width: 1260px;
-        margin-left: -630px;
-    }
-    .main_screen {
-        width: 600px;
-    }
+@media screen and (min-width: 640px) and (min-height: 640px) {
+    #container { width: 640px; height: 640px; margin: -320px -320px; }
+    .main_screen { width: 600px; height: 600px; }
 }

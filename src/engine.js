@@ -10,7 +10,7 @@ var d1ce = d1ce || {};
 d1ce.name = "d1ce";
 
 // Version.
-d1ce.version = "0.3.190501+0";
+d1ce.version = "0.4.190515+5";
 
 // Identifier.
 d1ce.identifier = d1ce.name + "-" + d1ce.version;

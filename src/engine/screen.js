@@ -69,6 +69,9 @@ d1ce.Sprite = class {
     constructor(type=null) {
         this.root = null;
         this.sprite = null;
+        this.frames = 0;
+        this.width = 0;
+        this.height = 0;
         this.type = null;
         this.anime = null;
         this.pos = null;
@@ -83,6 +86,38 @@ d1ce.Sprite = class {
         this.root.appendChild(this.sprite);
         if (type != null) {
             this.sprite.setAttribute("class", type);
+        }
+    }
+
+    // Load image.
+    LoadImage(name, width_, height_) {
+        if (this.root != null) {
+            if (this.sprite != null) {
+                var image = new Image() ;
+                image.onload = () => {
+                    this.width = width_ > 0 ? width_ : image.naturalWidth;
+                    this.height = height_ > 0 ? height_ : width_ > 0 ? width_ : image.naturalHeight;
+                    this.frames = Math.floor(image.naturalWidth / this.width);
+                    // if (this.sprite.style.width == null
+                    // ||  this.sprite.style.height == null) {
+                        this.sprite.style.width = this.width;
+                        this.sprite.style.height = this.height;
+                        this.sprite.style.backgroundSize = ""
+                        + (image.naturalWidth / this.width) + " "
+                        + (image.naturalHeight / this.height);
+                    // }
+                    let url = "url(\"" + name + "\")";
+                    this.sprite.style.backgroundImage = url;
+                }
+                image.src = name;
+            }
+        }
+    }
+
+    // Wait loading image.
+    async WaitLoadingImage() {
+        while (this.frames <= 0) {
+            await new Promise(r => setTimeout(r, 100));
         }
     }
 
@@ -138,6 +173,10 @@ d1ce.Sprite = class {
             this.scale = scale;
             this.root.style.transform = "scale(" + this.scale + ")" +
                 "rotate(" + this.angle + "deg)";
+            this.root.style.marginLeft = this.root.clientWidth * (scale - 1) / 2;
+            this.root.style.marginRight = this.root.clientWidth * (scale - 1) / 2;
+            this.root.style.marginTop = this.root.clientHeight * (scale - 1) / 2;
+            this.root.style.marginBottom = this.root.clientHeight * (scale - 1) / 2;
         }
     }
 
@@ -151,11 +190,36 @@ d1ce.Sprite = class {
 
     // Set sprite type.
     SetType(type) {
-        if (this.sprite != null) {
+        if (this.root != null) {
             if (this.sprite != null && !this.sprite.classList.contains(type)) {
                 this.sprite.classList.remove(this.type);
                 this.sprite.classList.add(type);
                 this.type = type;
+            }
+        }
+    }
+
+    // Set texture frame.
+    SetFrame(frame) {
+        if (this.root != null) {
+            if (this.sprite != null && this.frames > 0) {
+                let x = (frame % this.frames) * this.width;
+                let y = Math.floor(frame / this.frames) * this.height;
+                this.sprite.style.backgroundPosition = "" + (-x) + " " + (-y);
+            }
+        }
+    }
+
+    // Set texture frame.
+    SetFrame2(x, y, w, h) {
+        if (this.root != null) {
+            if (this.sprite != null && this.width != null && this.height != null) {
+                this.sprite.style.width = w;
+                this.sprite.style.height = h;
+                this.sprite.style.backgroundPosition = "" + (-x) + " " + (-y);
+                let nx = (this.sprite.naturalWidth / w);
+                let ny = (this.sprite.naturalHeight / h);
+                 this.sprite.style.backgroundSize = "" + nx + " " + ny;
             }
         }
     }
@@ -176,20 +240,34 @@ d1ce.Sprite = class {
 /* Screen components test - NOBUILD */
 d1ce.ScreenTest = class {
 
-    // Main.
-    static async Main() {
+    // Constructor.
+    constructor() {
+
         this.main_screen = new d1ce.Screen("screen");
         this.log_screen = new d1ce.Screen("screen");
 
+        // Create sprites.
+        this.cube1 = new d1ce.Sprite("cube");
+        this.cube1.LoadImage("screen.png", 96, 96);
+        this.cube2 = new d1ce.Sprite("cube");
+        this.cube2.LoadImage("screen.png", 96, 96);
+        this.cube3 = new d1ce.Sprite("cube");
+        this.cube3.LoadImage("screen.png", 96, 96);
+    }
+
+    // Main.
+    async Main() {
+
         // Display sprite.
         this.log_screen.Print("Draw sprite.");
-        this.cube1 = new d1ce.Sprite("cube");
+        await this.cube1.WaitLoadingImage();
+        this.cube1.SetFrame(1);
         this.cube1.Enable(this.main_screen, true);
 
         // Transform sprite.
         this.log_screen.Print("Transform sprite.");
-        this.cube2 = new d1ce.Sprite("cube");
-        this.cube2.SetType("wireframe");
+        await this.cube2.WaitLoadingImage();
+        this.cube2.SetFrame(2);
         this.cube2.SetAngle(45);
         this.cube2.SetScale(1.5);
         this.cube2.SetAlpha(0.5);
@@ -198,13 +276,21 @@ d1ce.ScreenTest = class {
 
         // Animate sprite.
         this.log_screen.Print("Animate sprite.");
-        this.cube3 = new d1ce.Sprite("cube");
-        this.cube3.SetType("wireframe");
+        await this.cube3.WaitLoadingImage();
+        this.cube3.SetFrame(3);
         this.cube3.SetAlpha(0.5);
         this.cube3.SetAnime("scaling");
         this.cube3.Enable(this.main_screen, true);
     }
+
+    // Get instance.
+    static Instance() {
+        if (this.instance == null) {
+            this.instance = new d1ce.ScreenTest();
+        }
+        return this.instance;
+    }
 }
 
-window.onload = () => d1ce.ScreenTest.Main();
+window.onload = () => d1ce.ScreenTest.Instance().Main();
 /* /NOBUILD - /Test */

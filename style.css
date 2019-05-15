@@ -45,18 +45,23 @@ a {
     bottom: auto;
 
     width: 100%;
-    height: 45px;
+    height: 10px;
 
-    font-size: 30;
+    font-size: 10;
 }
 
 #footer {
     top: auto;
 
     width: 100%;
-    height: 15px;
+    height: 10px;
 
     font-size: 10;
+}
+
+@keyframes start {
+    0% { transform: opacity: 0; }
+    100% { transform: opacity: 1; }
 }
 
 #container {
@@ -68,10 +73,8 @@ a {
     justify-content: space-between; -webkit-justify-content: space-between;
     align-items: center; -webkit-align-items: center;
 
-    width: 960px;
-    height: 390px;
-    margin-left: -480px;
-    margin-top: -195px;
+    width: 320px; height: 320px;
+    margin: -160px -160px;
 
     animation: start 0.5s forwards;
 }
@@ -84,11 +87,17 @@ a {
     justify-content: center; -webkit-justify-content: center;
     align-items: center; -webkit-align-items: center;
 
-    width: 300px;
-    height: 400px;
-    margin: 30px;
-    border: none;
+    width: 300px; height: 300px; border: none;
 
     background-color: #fff;
     color: #666;
+}
+
+@media screen and (min-width: 480px) and (min-height: 480px) {
+    #container { width: 480px; height: 480px; margin: -240px -240px; }
+    .main_screen { width: 450px; height: 450px; }
+}
+@media screen and (min-width: 640px) and (min-height: 640px) {
+    #container { width: 640px; height: 640px; margin: -320px -320px; }
+    .main_screen { width: 600px; height: 600px; }
 }

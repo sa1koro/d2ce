@@ -18,7 +18,10 @@
 
     <div id="container">
         <div id="header"></div>
-        <iframe class="main_screen" src="d1ce/app.html"></iframe>
+        <!-- Production -  -->
+            <iframe class="main_screen" src="d1ce/app.html"></iframe>
+        <!--  - /Production -->
+        <!-- Development -  - /Development -->
         <div id="footer">
             <a href="https://twitter.com/sa1koro/" target="_blank"><img src="https://abs.twimg.com/favicons/favicon.ico" style="width:16px;margin-right:-2px">@sa1koro</a>
             &nbsp;
@@ -27,6 +30,19 @@
             <a href="https://github.com/sa1koro/d1ce" target="_blank"><img src="https://github.githubassets.com/favicon.ico"style="width:16px;margin-right:1px">@sa1koro/d1ce</a>
         </div>
     </div>
+
+    <!-- Production -  -->
+        <script type="text/javascript" src="d1ce/engine.js"></script>
+    <!--  - /Production -->
+    <!-- Development -  - /Development -->
+    <script type="text/javascript">
+        window.addEventListener("message", (evt) => {
+            let params = new d1ce.Params("*");
+            console.log("type:" + params.Value("type"));
+            console.log("seed:" + params.Value("seed"));
+            console.log("face:" + params.Value("face"));
+        }, false);
+    </script>
 
     <script>navigator.serviceWorker.register("worker.js");</script>
 

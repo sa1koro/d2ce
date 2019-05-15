@@ -23,9 +23,9 @@ class App {
     }
 
     // Setup screen after load assets.
-    Load() {
-        this.hand.Load();
-        this.cubes.Load();
+    async Load() {
+        await this.hand.Load();
+        await this.cubes.Load();
     }
 
     // Store status on suspend.
@@ -69,7 +69,7 @@ class App {
 
             // Released other -> Selecting cubes.
             } else {
-                this.cubes.StartSelecting();
+                this.cubes.StartReleased();
             }
 
         // Swiping -> Swiping cubes.
@@ -101,7 +101,7 @@ class App {
     // Main.
     async Main() {
         console.log("Load.");
-        this.Load();
+        await this.Load();
         while (true) {
             if (!this.suspend) {
                 this.Update();
