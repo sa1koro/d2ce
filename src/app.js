@@ -20,12 +20,44 @@ class App {
         // Create sprites.
         this.hand = new Hand(this.touch_screen);
         this.cubes = new Cubes(this.main_screen);
+        this.touching = null;
+
+        // Load fixed parameter from query.
+        let query = new d1ce.Params("");
+        if (query.Value("face")) {
+            this.fixed = "face";
+        } else if (query.Value("seed")) {
+            this.fixed = "seed";
+        } else if (query.Value("type")) {
+            if (query.Value("type").match(/([\+\-])(\d*)d(\d*)/)) {
+                this.fixed = "face";
+            } else {
+                this.fixed = "type";
+            }
+        }
+
+        // // Load fixed parameter from storage.
+        // if (this.storage.Value("fixed")) {
+        //     this.fixed = this.storage.Value("fixed");
+        // }
+
+        // // Store current state.
+        // this.storage.UpdateValue("fixed", this.fixed);
     }
 
     // Setup screen after load assets.
     async Load() {
+
         await this.hand.Load();
         await this.cubes.Load();
+
+        if (this.fixed == "face") {
+            this.cubes.StartRolling();
+        } else if (this.fixed == "seed") {
+            this.cubes.StartRolling();
+        } else {
+            this.cubes.StartReleased();
+        }
     }
 
     // Store status on suspend.
@@ -39,56 +71,72 @@ class App {
 
         // Tapped -> Roll cubes.
         if (this.hand.Tapped()) {
-            this.cubes.StartRolling();
+
+            // Reroll
+            this.cubes.StartRerolling();
+            this.touching = null;
 
         // Released -> Change cubes or do test method.
         } else if (this.hand.Released()) {
 
-            // Released right -> Change cubes type.
-            if (this.hand.Released().Right()) {
-
-                // // Clear cache.
-                // if (this.cubes.option.Value("type") >= 3) {
-                //     this.log_screen.Print("Clear local storage.");
-                //     window.localStorage.clear();
-                //     this.log_screen.Print("Clear cache.");
-                //     window.caches.keys().then((keys) => {
-                //         keys.map((key) => {
-                //             window.caches.delete(key);
-                //         });
-                //     });
-                //     this.log_screen.Print("Clear debug screen.");
-                //     this.log_screen.Clear();
-                // }
-
-                this.cubes.StartChanging(1);
-
-            // Released left -> Change cubes type.
-            } else if (this.hand.Released().Left()) {
-                this.cubes.StartChanging(-1);
-
-            // Released other -> Selecting cubes.
-            } else {
+            // Released when type parameter is fixed.
+            if (this.fixed == "type") {
                 this.cubes.StartReleased();
+            } else if (this.fixed == "seed" || this.fixed == "face") {
+                this.cubes.StartReleased(this.touching);
+            } else {
+
+                // Released right/left -> Change cubes type.
+                if (this.hand.Released().Right()) {
+                    this.cubes.StartChanging(1);
+                } else if (this.hand.Released().Left()) {
+                    this.cubes.StartChanging(-1);
+                }
             }
+            this.touching = null;
 
         // Swiping -> Swiping cubes.
         } else if (this.hand.Swiping()) {
-            if (this.hand.Swiping().Right()) {
-                this.cubes.StartHolding(1);
-            } else if (this.hand.Swiping().Left()) {
-                this.cubes.StartHolding(-1);
+
+            // Released when type parameter is fixed.
+            if (this.fixed == "type") {
+                this.cubes.StartReleased();
+            } else if (this.fixed == "seed" || this.fixed == "face") {
+
+                // Swipgin down/uo -> Select cube.
+                if (this.hand.Swiping().Up()) {
+                    this.cubes.StartSelecting(this.touching, 0);
+                } else if (this.hand.Swiping().Down()) {
+                    this.cubes.StartSelecting(this.touching, 1);
+                }
             } else {
-                this.cubes.StartHolding(0);
+
+                // Swipgin right/left -> Change cubes type.
+                if (this.hand.Swiping().Right()) {
+                    this.cubes.StartHolding(1);
+                } else if (this.hand.Swiping().Left()) {
+                    this.cubes.StartHolding(-1);
+                } else {
+                    this.cubes.StartHolding(0);
+                }
             }
 
         // Holding -> Holding cubes.
         } else if (this.hand.Holding()) {
-            this.cubes.StartHolding(0);
+
+            // Released when type parameter is fixed.
+            if (this.fixed == "type") {
+                this.cubes.StartReleased();
+            } else if (this.fixed == "seed" || this.fixed == "face") {
+                this.cubes.StartSelecting(this.touching, 1);
+            } else {
+                this.cubes.StartHolding(0);
+            }
 
         // Touching -> Selecting cubes.
         } else if (this.hand.Touching()) {
-            this.cubes.StartSelecting();
+            this.touching = this.hand.Point();
+            this.cubes.StartTouching();
         }
 
         this.cubes.Update();
