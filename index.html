@@ -4,12 +4,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <title>Saikoro.org</title>
-    <link rel="icon" type="image/png" href="d1ce/info/icon256a.png">
+    <link rel="icon" type="image/png" href="info/icon256a.png">
     <link rel="manifest" href="manifest.json">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <link rel="apple-touch-icon" href="d1ce/info/icon192.png" sizes="192x192">
-    <link rel="apple-touch-startup-image" href="d1ce/info/startup.png">
+    <link rel="apple-touch-icon" href="info/icon192.png" sizes="192x192">
+    <link rel="apple-touch-startup-image" href="info/startup.png">
 
     <link rel="stylesheet" href="style.css">
 
@@ -38,9 +38,8 @@
         </span>
     </div>
 
-    <script type="text/javascript" src="d1ce/engine.js"></script>
-    <!-- <script type="text/javascript" src="d1ce/engine/params.js"></script>
-    <script type="text/javascript" src="d1ce/engine/screen.js"></script> -->
+    <script type="text/javascript" src="engine.js"></script>
+    <!-- Development -  - /Development -->
 
     <script type="text/javascript">
         let result_screen = new d1ce.Screen("result_screen");
@@ -61,14 +60,14 @@
             // Load dice applet.
             if (face != null) {
                 if (hold != null) {
-                    applet.src = "d1ce/app.html?type=" + type + "&face=" + face + "&hold=" + hold;
+                    applet.src = "app.html?type=" + type + "&face=" + face + "&hold=" + hold;
                 } else {
-                    applet.src = "d1ce/app.html?type=" + type + "&face=" + face;
+                    applet.src = "app.html?type=" + type + "&face=" + face;
                 }
             } else if (seed != null) {
-                applet.src = "d1ce/app.html?type=" + type + "&seed=" + seed;
+                applet.src = "app.html?type=" + type + "&seed=" + seed;
             } else {
-                applet.src = "d1ce/app.html?type=" + type;
+                applet.src = "app.html?type=" + type;
             }
 
             // Change menu color.
@@ -320,12 +319,26 @@
                 // Rerolling dice.
                 } else if (hold.length > 0) {
 
-                    for (let i = 0; i < hold.length; ++i) {
-                        if (!hold[i]) {
-                            face[i] = 0;
+                    // Reroll.
+                    if (type[1] <= 20) {
+                        for (let i = 0; i < hold.length; ++i) {
+                            if (!hold[i]) {
+                                face[i] = 0;
+                            }
                         }
+                        UpdateApplet(message.Value("type"), null, face);
+
+                    // Discard.
+                    } else {
+                        let face_hold = [];
+                        for (let i = 0; i < hold.length; ++i) {
+                            if (hold[i]) {
+                                face_hold.push(face[i]);
+                            }
+                        }
+                        let type_hold = "" + face_hold.length + "d" + type[1];
+                        UpdateApplet(type_hold, null, face_hold);
                     }
-                    UpdateApplet(message.Value("type"), null, face);
 
                 } else {
 
