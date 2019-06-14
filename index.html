@@ -55,20 +55,14 @@
         };
 
         // Update applet.
-        function UpdateApplet(type, seed = null, face = null, hold = null) {
+        function UpdateApplet(type, seed = null, face = null, flag = null) {
 
             // Load dice applet.
-            if (face != null) {
-                if (hold != null) {
-                    applet.src = "app.html?type=" + type + "&face=" + face + "&hold=" + hold;
-                } else {
-                    applet.src = "app.html?type=" + type + "&face=" + face;
-                }
-            } else if (seed != null) {
-                applet.src = "app.html?type=" + type + "&seed=" + seed;
-            } else {
-                applet.src = "app.html?type=" + type;
-            }
+            let args = (type != null ? "&type=" + type : "") +
+                (seed != null ? "&seed=" + seed : "") +
+                (face != null ? "&face=" + face : "") +
+                (flag != null ? "&flag=" + flag : "");
+            applet.src = "app.html?" + args.slice(1);
 
             // Change menu color.
             Object.keys(menu).forEach((key) => {
@@ -115,9 +109,9 @@
             return face && face.split(",").map((n) => isFinite(n) ? Number(n) : 0) || [];
         }
 
-        // Parse hold parameter.
-        function ParseHoldParams(hold) {
-            return hold && hold.split(",").map((n) => isFinite(n) ? Number(n) : 0) || [];
+        // Parse flag parameter.
+        function ParseFlagParams(flag) {
+            return flag && flag.split(",").map((n) => isFinite(n) ? Number(n) : 0) || [];
         }
 
         // Result of Blackjack.
@@ -261,8 +255,8 @@
         let query = new d1ce.Params();
         if (query.Value("type")) {
             if (query.Value("face")) {
-                if (query.Value("hold")) {
-                    UpdateApplet(query.Value("type"), null, query.Value("face"), query.Value("hold"));
+                if (query.Value("flag")) {
+                    UpdateApplet(query.Value("type"), null, query.Value("face"), query.Value("flag"));
                 } else {
                     UpdateApplet(query.Value("type"), null, query.Value("face"));
                 }
@@ -288,6 +282,14 @@
                 UpdateMenu("" + type[0] + "d" + type[1]);
             }
 
+        } else if (query.Value("face")) {
+            if (query.Value("flag")) {
+                UpdateApplet(null, null, query.Value("face"), query.Value("flag"));
+            } else {
+                UpdateApplet(null, null, query.Value("face"));
+            }
+        } else if (query.Value("seed")) {
+            UpdateApplet(null, query.Value("seed"));
         } else {
             UpdateApplet("d6");
         }
@@ -310,34 +312,40 @@
                 let face = ParseFaceParams(message.Value("face"));
 
                 // Parse select parameter.
-                let hold = ParseHoldParams(message.Value("hold"));
+                let flag = ParseFlagParams(message.Value("flag"));
 
                 // Now rolling or undefined dice.
                 if (face.length == 0) {
                     UpdateResult("?");
 
                 // Rerolling dice.
-                } else if (hold.length > 0) {
+                } else if (flag.length > 0) {
 
                     // Reroll.
                     if (type[1] <= 20) {
-                        for (let i = 0; i < hold.length; ++i) {
-                            if (!hold[i]) {
-                                face[i] = 0;
+                        let face_next = [];
+                        let flag_next = [];
+                        for (let i = 0; i < flag.length; ++i) {
+                            if (!flag[i]) {
+                                face_next.push(face[i]);
+                            } else {
+                                face_next.push(0);
                             }
+                            flag_next.push(0);
                         }
-                        UpdateApplet(message.Value("type"), null, face);
+                        UpdateApplet(message.Value("type"), null, face_next, flag_next);
 
                     // Discard.
                     } else {
-                        let face_hold = [];
-                        for (let i = 0; i < hold.length; ++i) {
-                            if (hold[i]) {
-                                face_hold.push(face[i]);
+                        let face_next = [];
+                        let flag_next = [];
+                        for (let i = 0; i < flag.length; ++i) {
+                            if (!flag[i]) {
+                                face_next.push(face[i]);
+                                flag_next.push(0);
                             }
                         }
-                        let type_hold = "" + face_hold.length + "d" + type[1];
-                        UpdateApplet(type_hold, null, face_hold);
+                        UpdateApplet("" + face_next.length + "d" + type[1], null, face_next, flag_next);
                     }
 
                 } else {

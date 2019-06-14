@@ -1,0 +1,21 @@
+<html>
+<head>
+</head>
+<body>
+    <script type="text/javascript">
+        let path = window.location.pathname;
+        if (path && path.match(/^(.*\/)(\d+)$/)) {
+            path.replace(/^(.*\/)(\d+)$/, (match, p1, p2) => {
+                (match);
+                let arg0 = p1;
+                let arg1 = isFinite(p2) ? Number(p2) : 0;
+                if (arg1 == 0) {
+                    location.href = arg0 + "?type=2d54&seed=0";
+                } else {
+                    location.href = arg0 + "?face=" + arg1 + "&flag=0";
+                }
+            });
+        }
+    </script>
+</body>
+</html>
