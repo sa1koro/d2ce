@@ -3,7 +3,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Saikoro.org</title>
+    <title>Poker</title>
     <link rel="icon" type="image/png" href="info/icon256a.png">
     <link rel="manifest" href="manifest.json">
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -20,22 +20,54 @@
         <span id="header">
             <span id="result" class="result_screen"></span>
         </span>
+
         <iframe id="main_applet" class="main_screen"></iframe>
+
         <span id="footer">
-            <span id="menu" class="menu_screen">
-                <a id="menu_d6">d6</a> |
-                <a id="menu_2d6">2d6</a> |
-                <a id="menu_3d6">3d6</a> |
-                <a id="menu_d8">d8</a> |
-                <a id="menu_d10">d10</a> |
-                <a id="menu_2d10">2d10</a>
-            </span>
-            <!-- <a href="https://twitter.com/sa1koro/" target="_blank"><img src="https://abs.twimg.com/favicons/favicon.ico" style="width:16px;margin-right:-2px">@sa1koro</a>
-            &nbsp; -->
-            <!-- <a href="https://instagram.com/sa1koro/" target="_blank"><img src="https://www.instagram.com/favicon.ico" style="width:16px;margin-right:1px">@sa1koro</a>
-            &nbsp; -->
-            <!-- <a href="https://github.com/sa1koro/d1ce" target="_blank"><img src="https://github.githubassets.com/favicon.ico"style="width:16px;margin-right:1px">@sa1koro/d1ce</a> -->
+            <style>
+                tr.qr { height: 150px; }
+                th { width: 150px; text-align: center; vertical-align: top; }
+                .spadesclubs { color: 000; }
+                .heartsdiams { color: f00; }
+            </style>
+
+            <table>
+                <tr><th colspan="4">Initial Card</th></tr>
+                <tr class="qr">
+                    <th colspan="4"><span class="spadesclubs">&spades;</span><!--
+                    --><span class="heartsdiams">&hearts;</span><!--
+                    --><span class="heartsdiams">&diams;</span><!--
+                    --><span class="spadesclubs">&clubs;</span><br /><!--
+                    --><a href="./404.html?0"><img src="image/qr0.png" /></a></th></tr>
+                <tr><th colspan="4">Additional Card</th></tr>
+                <tr class="qr">
+                    <th class="spadesclubs">A&spades;<br /><a href="./404.html?1"><img src="image/qr1.png" /></a></a></th>
+                    <th class="heartsdiams">A&hearts;<br /><a href="./404.html?14"><img src="image/qr14.png" /></a></th>
+                    <th class="heartsdiams">A&diams;<br /><a href="./404.html?27"><img src="image/qr27.png" /></a></th>
+                    <th class="spadesclubs">A&clubs;<br /><a href="./404.html?40"><img src="image/qr40.png" /></a></th></tr>
+                <tr class="qr">
+                    <th class="spadesclubs">K&spades;<br /><a href="./404.html?13"><img src="image/qr13.png" /></a></th>
+                    <th class="heartsdiams">K&hearts;<br /><a href="./404.html?26"><img src="image/qr26.png" /></a></th>
+                    <th class="heartsdiams">K&diams;<br /><a href="./404.html?39"><img src="image/qr39.png" /></a></th>
+                    <th class="spadesclubs">K&clubs;<br /><a href="./404.html?52"><img src="image/qr52.png" /></a></th></tr>
+                <tr class="qr">
+                    <th class="spadesclubs">Q&spades;<br /><a href="./404.html?12"><img src="image/qr12.png" /></a></th>
+                    <th class="heartsdiams">Q&hearts;<br /><a href="./404.html?25"><img src="image/qr25.png" /></a></th>
+                    <th class="heartsdiams">Q&diams;<br /><a href="./404.html?38"><img src="image/qr38.png" /></a></th>
+                    <th class="spadesclubs">Q&clubs;<br /><a href="./404.html?51"><img src="image/qr51.png" /></a></th></tr>
+                <tr class="qr">
+                    <th class="spadesclubs">J&spades;<br /><a href="./404.html?11"><img src="image/qr11.png" /></a></th>
+                    <th class="heartsdiams">J&hearts;<br /><a href="./404.html?24"><img src="image/qr24.png" /></a></th>
+                    <th class="heartsdiams">J&diams;<br /><a href="./404.html?37"><img src="image/qr37.png" /></a></th>
+                    <th class="spadesclubs">J&clubs;<br /><a href="./404.html?50"><img src="image/qr50.png" /></a></th></tr>
+                <tr class="qr">
+                    <th class="spadesclubs">10&spades;<br /><a href="./404.html?10"><img src="image/qr10.png" /></a></th>
+                    <th class="heartsdiams">10&hearts;<br /><a href="./404.html?23"><img src="image/qr23.png" /></a></th>
+                    <th class="heartsdiams">10&diams;<br /><a href="./404.html?36"><img src="image/qr36.png" /></a></th>
+                    <th class="spadesclubs">10&clubs;<br /><a href="./404.html?49"><img src="image/qr49.png" /></a></th></tr>
+            </table>
         </span>
+
     </div>
 
     <script type="text/javascript" src="engine.js"></script>
@@ -46,12 +78,6 @@
         let menu_screen = new d1ce.Screen("menu_screen")
         let applet = document.getElementById("main_applet")
         let menu = {
-            "d6": document.getElementById("menu_d6"),
-            "2d6": document.getElementById("menu_2d6"),
-            "3d6": document.getElementById("menu_3d6"),
-            "d8": document.getElementById("menu_d8"),
-            "d10": document.getElementById("menu_d10"),
-            "2d10": document.getElementById("menu_2d10"),
         };
 
         // Update applet.
@@ -161,6 +187,10 @@
             let pairs_numbers = [];
             let highcard = card_numbers[4];
 
+            if (face_numbers.length < 5) {
+                return "?";
+            }
+
             // Count joker.
             for (let i = 0; i < face_numbers.length; ++i) {
                 if (card_numbers[i] == 0) {
@@ -266,22 +296,6 @@
                 UpdateApplet(query.Value("type"));
             }
 
-            // Parse type parameter.
-            let type = ParseTypeParams(query.Value("type"));
-
-            // Reset menu screen for Blackjack.
-            if (type[1] >= 52 && type[1] <= 54 && type[0] >= 2 && type[0] <= 4) {
-                UpdateMenu("Blackjack");
-
-            // Reset menu screen for Poker.
-            } else if (type[1] >= 52 && type[1] <= 54 && type[0] == 5) {
-                UpdateMenu("Poker");
-
-            // Reset menu screen for Dice.
-            } else {
-                UpdateMenu("" + type[0] + "d" + type[1]);
-            }
-
         } else if (query.Value("face")) {
             if (query.Value("flag")) {
                 UpdateApplet(null, null, query.Value("face"), query.Value("flag"));
@@ -291,7 +305,7 @@
         } else if (query.Value("seed")) {
             UpdateApplet(null, query.Value("seed"));
         } else {
-            UpdateApplet("d6");
+            UpdateApplet("2d54");
         }
 
         // Receiving message params.
@@ -350,34 +364,7 @@
 
                 } else {
 
-                    // Dotted dice.
-                    if (type[1] == 10) {
-                        let result = 0;
-                        for (let i = 0; i < face.length; ++i) {
-                            if (face[i] < 10) {
-                                result = result * 10 + face[i];
-                            } else {
-                                result = result * 10;
-                            }
-                        }
-                        UpdateResult(result);
-
-                    // Numbered dice.
-                    } else if (type[1] <= 20) {
-                        let result = 0;
-                        for (let i = 0; i < face.length; ++i) {
-                            result += face[i];
-                        }
-                        UpdateResult(result);
-
-                    // Blackjack.
-                    } else if (type[1] >= 52 && type[1] <= 54 && type[0] >= 2 && type[0] <= 4) {
-                        UpdateResult(BlackjackResult(face));
-
-                    // Poker.
-                    } else if (type[1] >= 52 && type[1] <= 54 && type[0] == 5) {
-                        UpdateResult(PokerResult(face));
-                    }
+                    UpdateResult(PokerResult(face));
                 }
             }
         // }
@@ -390,6 +377,5 @@
     </script>
 
     <script>navigator.serviceWorker.register("worker.js");</script>
-
 </body>
 </html>

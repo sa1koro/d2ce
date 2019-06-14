@@ -3,22 +3,22 @@
  */
 
 html {
-    height: 100%;
+    /* height: 100%;
     overflow: hidden;
     user-select: none; -moz-user-select: none;
-    touch-callout: none;
+    touch-callout: none; */
 }
 
 body {
-    position: fixed;
-    top: 0; left: 0; right: 0; bottom: 0;
+    /* position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0; */
 
-    width: 100%;
+    /* width: 100%;
     height: 100%;
-    margin: 0px;
+    margin: 0px; */
 
     /* overflow: auto; */
-    overflow: hidden;
+    /* overflow: hidden; */
 
     font-family: 'Helvetica Neue', 'Arial', sans-serif;
     background-color: #fff;
@@ -37,7 +37,7 @@ a:hover {
 #header, #footer {
     z-index: 400;
     /* position: absolute; */
-    top: 0; left: 0; right: 0; bottom: 0;
+    /* top: 0; left: 0; right: 0; bottom: 0; */
     width: 100%;
 
     display: table-cell;
@@ -79,17 +79,17 @@ a:hover {
     color: #666;
 }
 #header { font-size: 30; }
-#footer { font-size: 10; }
+#footer { font-size: 10; margin-top: 150px; }
 
 @media screen and (min-width: 540px) and (min-height: 540px) {
     #container { width: 540px; height: 540px; margin: -270px -270px; }
     .main_screen { width: 450px; height: 450px; }
     #header { font-size: 45; }
-    #footer { font-size: 15; }
+    #footer { font-size: 15; margin-top: 225px; }
 }
 @media screen and (min-width: 720px) and (min-height: 720px) {
     #container { width: 720px; height: 720px; margin: -360px -360px; }
     .main_screen { width: 600px; height: 600px; }
     #header { font-size: 60; }
-    #footer { font-size: 20; }
+    #footer { font-size: 20; margin-top: 300px; }
 }
