@@ -4,8 +4,8 @@
     "background_color": "#888",
     "theme_color": "#888",
     "icons": [{
-        "src": "./d1ce/info/icon224.png",
-        "sizes": "224x224"
+        "src": "./d1ce/info/P0-icon256.png",
+        "sizes": "256x256"
     }],
     "start_url": "./?app=1",
     "display": "standalone"
