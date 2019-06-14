@@ -88,6 +88,11 @@
                 (flag != null ? "&flag=" + flag : "");
             applet.src = "app.html?" + args.slice(1);
 
+            console.log("Applet type=" + type +
+                        " face=" + face +
+                        " flag=" + flag);
+
+
             // Change menu color.
             Object.keys(menu).forEach((key) => {
                 if (key == type) {
@@ -184,12 +189,6 @@
             let pairs = 0;
             let pairs_numbers = [];
             let highcard = card_numbers[4];
-
-            if (face_numbers.length < 5) {
-                return "?";
-            } else if (face_numbers.length > 5) {
-                return "Tap to discard!";
-            }
 
             // Count joker.
             for (let i = 0; i < face_numbers.length; ++i) {
@@ -328,31 +327,44 @@
                 // Parse select parameter.
                 let flag = ParseFlagParams(message.Value("flag"));
 
+                console.log("Received type=" + message.Value("type") +
+                            " face=" + message.Value("face") +
+                            " flag=" + message.Value("flag"));
+
                 // Now rolling or undefined dice.
                 if (face.length == 0) {
                     UpdateResult("?");
 
-                // Rerolling dice.
-                } else if (flag.length > 0) {
+                // Too many hands and discard.
+                } else if (face.length > 5) {
+                    UpdateResult("Tap to discard!");
 
-                    // Discard.
+                // Too few hands.
+                } else if (face.length < 5) {
+                    UpdateResult("?");
+
+                // Result of hands.
+                } else {
+                    UpdateResult(PokerResult(face));
+                }
+
+                // Received flag.
+                if (flag.length > 0) {
                     let face_next = [];
-                    let flag_next = [];
-                    for (let i = 0; i < flag.length; ++i) {
+                    for (let i = 0; i < face.length; ++i) {
                         if (!flag[i]) {
                             face_next.push(face[i]);
-                            flag_next.push(0);
                         }
                     }
-                    if (face_next.length <= 5) {
-                        UpdateApplet("" + face_next.length + "d" + type[1], null, face_next);
-                    } else {
-                        UpdateApplet("" + face_next.length + "d" + type[1], null, face_next, flag_next);
+                    if (face_next.length != face.length) {
+                        UpdateApplet("" + face_next.length + "d" + type[1], null, face_next, null);
                     }
+                }
 
-                } else {
-
-                    UpdateResult(PokerResult(face));
+                // Too many hands and discard.
+                if (flag.length == 0 && face.length > 5) {
+                    let flag_next = [];
+                    UpdateApplet("" + face.length + "d" + type[1], null, face, flag_next);
                 }
             }
         // }

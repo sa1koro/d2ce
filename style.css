@@ -81,13 +81,13 @@ a:hover {
 #header { font-size: 30; }
 #footer { font-size: 10; margin-top: 180px; }
 
-@media screen and (min-width: 540px) {
+@media screen and (min-width: 540px) and (min-height: 540px) {
     #container { width: 540px; margin: -270px; }
     .main_screen { width: 450px; height: 450px; }
     #header { font-size: 45; }
     #footer { font-size: 15; margin-top: 270px; }
 }
-@media screen and (min-width: 720px) {
+@media screen and (min-width: 720px) and (min-height: 720px) {
     #container { width: 720px; margin: -360px; }
     .main_screen { width: 600px; height: 600px; }
     #header { font-size: 60; }
