@@ -59,8 +59,8 @@ a:hover {
     justify-content: space-between; -webkit-justify-content: space-between;
     align-items: center; -webkit-align-items: center;
 
-    width: 360px; height: 360px;
-    margin: -180px -180px;
+    width: 360px;
+    margin: -180px;
 
     animation: start 0.5s forwards;
 }
@@ -79,17 +79,17 @@ a:hover {
     color: #666;
 }
 #header { font-size: 30; }
-#footer { font-size: 10; margin-top: 150px; }
+#footer { font-size: 10; margin-top: 180px; }
 
-@media screen and (min-width: 540px) and (min-height: 540px) {
-    #container { width: 540px; height: 540px; margin: -270px -270px; }
+@media screen and (min-width: 540px) {
+    #container { width: 540px; margin: -270px; }
     .main_screen { width: 450px; height: 450px; }
     #header { font-size: 45; }
-    #footer { font-size: 15; margin-top: 225px; }
+    #footer { font-size: 15; margin-top: 270px; }
 }
-@media screen and (min-width: 720px) and (min-height: 720px) {
-    #container { width: 720px; height: 720px; margin: -360px -360px; }
+@media screen and (min-width: 720px) {
+    #container { width: 720px; margin: -360px; }
     .main_screen { width: 600px; height: 600px; }
     #header { font-size: 60; }
-    #footer { font-size: 20; margin-top: 300px; }
+    #footer { font-size: 20; margin-top: 360px; }
 }
