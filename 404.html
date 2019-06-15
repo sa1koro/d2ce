@@ -4,16 +4,10 @@
 <body>
     <script type="text/javascript">
         let path = location.href;
-        if (path && path.match(/(.*[\/\?])(\d+)$/)) {
-            path.replace(/(.*[\/\?])(\d+)$/, (match, p1, p2) => {
+        if (path && path.match(/404.html[\/\?]([0-9A-Z\/\+]+)$/)) {
+            path.replace(/404.html[\/\?]([0-9A-Z\/\+]+)$/, (match, p1) => {
                 (match);
-                let arg0 = p1;
-                let arg1 = isFinite(p2) ? Number(p2) : 0;
-                if (arg1 == 0) {
-                    location.href = "index.html?type=2d54&seed=0";
-                } else {
-                    location.href = "index.html?face=" + arg1;
-                }
+                location.href = "index.html?" + p1.replace(/[\/\+]/g, "+");
             });
         } else {
             location.href = "index.html";
